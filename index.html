@@ -1,26 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<title>Monk's Cafe</title>
+  <meta charset="utf-8">
+  <!-- boostrap css -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Tom's Restaurant</title>
 </head>
 <body>
-  <h1>Monk’s Cafe</h1>
-  <h4>“The Coffee Shop”</h4>
-  <div id="image"></div>
+  <h1>Tom's Restaurant</h1>
+  <h4>Chase the flavors!</h4>
+
+<!-- This is the first big image. It will be styled as a Polaroid picture. -->
+
+    <div class="polaroid">
+      <img src="static/toms-restaurant.jpg" alt="Tom's Restaurant">
+      <div class="container">
+      <p>Great location!</p>
+      </div>
+    </div>
+
+<!-- This is the reservations section: -->
 
   <h1>Reservations</h1>
-  <h2>Make a Reservation</h2>
-  <h2>Existing Reservations</h2>
+  <div class="row">
+    <div class="column">
+
+<!-- This is the "Make a reservation" column -->
+
+      <h2>Make a Reservation</h2>
+    <form class="form-inline reservation-form">
+      <div class="form-group">
+        <input type="text" class="form-control reservation-name" placeholder="Jane Doe">
+      </div>
+      <div class="form-group">
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+            Select A Day
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu reservation-day">
+            <li><a>Today</a></li>
+            <li><a>Tomorrow</a></li>
+            <li><a>The day after next</a></li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn btn-default reservation-button">Set Reservation</button>
+    </form>
+    </div>
+    <div class="column">
+
+<!-- This is the "Existing Reservations" column. It prints in a table the name and day of the existing reservations retriving the data from Firebase -->
+
+      <h2>Existing Reservations</h2>
+      <table>
+        <thead>
+          <th>Customer name</th>
+          <th>Day</th>
+        </thead>
+        <tbody>
+          <script id="reservation-template" type="text/x-handlebars-template">
+            <tr data-id="{{reservationId}}">
+              <th>{{name}}</th>
+              <th>{{day}}</th>
+            </tr>
+          </script>
+        </tbody>
+      </table>
+      <div class="reservations"></div>
+    </div>
+  </div>
+
+<!-- This is where the map goes -->
 
   <h1>Come Dine with Us</h1>
-  <div id="map"></div>
+  <div class="container-fluid restaurant-locator">
+     <div class="row">
+        <div id="map" class="col-md-12"></div>
+     </div>
+  </div>
+
+<!-- This is the section of the customer reviews -->
 
   <h1>Customer Reviews</h1>
-  <p>“Big lettuce, big carrots, tomatoes like volleyballs.”</p>
-  <p>— Jerry Seinfeld, on The BIG Salad</p>
+  <div class="row">
+    <div class="column">
 
-  <script type="text/javascript" src="js/main.js"></script>
+<!-- In the left column goes the other picture: -->
+
+      <div class="polaroid">
+        <img src="static/jerry.jpg" alt="Tom's Restaurant">
+        <div class="container">
+        <p>Good food… Good feelings</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="column">
+
+<!-- This is the right column where the comments are written, submitted and listed (Firebase) -->
+
+      <form class="form-inline comment-form">
+        <div class="form-group">
+          <input type="text" class="form-control comment-text" placeholder="Your comment here...">
+        </div>
+        <button class="btn btn-default comment-button">Submit Comment</button>
+      </form>
+
+      <div class="clientsComments"></div>
+      <script id="comment-template" type="text/x-handlebars-template">
+        <span data-id="{{commentId}}">
+          <p>{{text}}</p>
+        </span>
+      </script>
+    </div>
+  </div>
+
+  <!-- Core Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+  <!-- bootstrap js -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- handlebars -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <!-- custom js -->
+  <script src="js/main.js"></script>
+  <!-- google maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDbt1M_Y1NT5NIZ27O1y0L-PXT5-bEIjs" async defer></script>
 </body>
 </html>
