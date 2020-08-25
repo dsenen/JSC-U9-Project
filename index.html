@@ -4,20 +4,17 @@
   <meta charset="utf-8">
   <!-- boostrap css -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/styleU9.css">
   <title>Tom's Restaurant</title>
 </head>
 <body>
   <h1>Tom's Restaurant</h1>
   <h4>Chase the flavors!</h4>
 
-<!-- This is the first big image. It will be styled as a Polaroid picture. -->
+<!-- This is the first big image. It will be styled as a shadow-pic picture. -->
 
-    <div class="polaroid">
+    <div class="shadow-pic">
       <img src="static/toms-restaurant.jpg" alt="Tom's Restaurant">
-      <div class="container">
-      <p>Great location!</p>
-      </div>
     </div>
 
 <!-- This is the reservations section: -->
@@ -56,19 +53,17 @@
       <h2>Existing Reservations</h2>
       <table>
         <thead>
-          <th>Customer name</th>
-          <th>Day</th>
+          <th>Who?</th>
+          <th>When?</th>
         </thead>
-        <tbody>
           <script id="reservation-template" type="text/x-handlebars-template">
             <tr data-id="{{reservationId}}">
-              <th>{{name}}</th>
-              <th>{{day}}</th>
+              <td>{{name}}</td>
+              <td>{{day}}</td>
             </tr>
           </script>
-        </tbody>
+      <tbody class="reservations"></tbody>
       </table>
-      <div class="reservations"></div>
     </div>
   </div>
 
@@ -89,11 +84,8 @@
 
 <!-- In the left column goes the other picture: -->
 
-      <div class="polaroid">
+      <div class="shadow-pic">
         <img src="static/jerry.jpg" alt="Tom's Restaurant">
-        <div class="container">
-        <p>Good food… Good feelings</p>
-        </div>
       </div>
     </div>
  
@@ -103,7 +95,7 @@
 
       <form class="form-inline comment-form">
         <div class="form-group">
-          <input type="text" class="form-control comment-text" placeholder="Your comment here...">
+          <textarea class="form-control comment-text" placeholder="Your comment here..."></textarea>
         </div>
         <button class="btn btn-default comment-button">Submit Comment</button>
       </form>
@@ -127,7 +119,7 @@
   <!-- handlebars -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
   <!-- custom js -->
-  <script src="js/main.js"></script>
+  <script src="js/mainU9.js"></script>
   <!-- google maps -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDbt1M_Y1NT5NIZ27O1y0L-PXT5-bEIjs" async defer></script>
 </body>
