@@ -62,13 +62,13 @@
             <tr data-id="{{reservationId}}">
               <td>{{name}}</td>
               <td>{{day}}</td>
+              <td><a href="#" class="remove">Cancel</a></td>
             </tr>
           </script>
       <tbody class="reservations"></tbody>
       </table>
     </div>
   </div>
-
 <!-- This is where the map goes -->
 
   <h1>Come Dine with Us</h1>
@@ -110,6 +110,51 @@
       </script>
     </div>
   </div>
+
+  <h1>Opening Hours</h1>
+
+  <div class="row">
+    <div class="column">
+      <table>
+        <thead><h3>Opening hours</h3></thead>
+        <tbody>
+          <tr>
+            <td>Monday</td>
+            <td>Open 24 hours</td>
+          </tr>
+          <tr>
+            <td>Tuesday</td>
+            <td>7:00 am – 1:00 am</td>
+          </tr>
+          <tr>
+            <td>Wednesday</td>
+            <td>7:00 am – 1:00 am</td>
+          </tr>
+          <tr>
+            <td>Thursday</td>
+            <td>7:00 am – 1:00 am</td>
+          </tr>
+          <tr>
+            <td>Friday</td>
+            <td>Open 24 hours</td>
+          </tr>
+          <tr>
+            <td>Saturday</td>
+            <td>Open 24 hours</td>
+          </tr>
+          <tr>
+            <td>Sunday</td>
+            <td>Open 24 hours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="column">
+      <p id="date"></p>
+      <div id="clock"></div>
+      <p id="status"></p>
+    </div>
+</div>
 
   <!-- Core Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>

@@ -1,19 +1,3 @@
-function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.8054491, lng: -73.9654415},
-    zoom: 8,
-    scrollwheel: false
-  });
-
-  var marker = new google.maps.Marker({
-    position: {lat: 40.8054491, lng: -73.9654415},
-    map: map,
-    title: 'Monks Café'
-  });
-}
-
-initMap();
-
 var firebaseConfig = {
   apiKey: "AIzaSyBXaDssCjvuyMRmxIuta_BddI2TUoaA4I4",
   authDomain: "reservation-site-846dd.firebaseapp.com",
@@ -126,3 +110,159 @@ function getComments(){
 
 getComments();
 
+// Cancelling the reservations:
+
+$('.reservations').on('click', '.remove', function (e) {
+  e.preventDefault()
+  // Get the ID for the comment we want to update
+  var id = $(e.target).parent().parent().data('id')
+  // var id = $(this).parent().parent().data('id');
+
+  // find comment whose objectId is equal to the id we're searching with
+  var reservationReference = database.ref('reservations/' + id)
+
+  // Use remove method to remove the comment from the database
+  reservationReference.remove()
+
+});
+
+// https://www.digitalocean.com/community/tutorials/understanding-date-and-time-in-javascript
+// https://stackoverflow.com/questions/15141762/how-to-initialize-a-javascript-date-to-a-particular-time-zone
+
+// const today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+const today = new Date();
+// console.log(today);
+// console.log(today.getDay());
+// console.log(today.getHours());
+
+var dayWord = today.getDay();
+
+switch(dayWord) {
+  case 0:
+    dayWord = 'Sunday';
+    break;
+  case 1:
+    dayWord = 'Monday';
+    break;
+  case 2:
+    dayWord = 'Tuesday';
+    break;
+  case 3:
+    dayWord = 'Wednesday';
+    break;
+  case 4:
+    dayWord = 'Thursday';
+    break;
+  case 5:
+    dayWord = 'Friday';
+    break;
+  case 6:
+    dayWord = 'Saturday';
+    break;
+}
+
+var monthWord = today.getMonth();
+
+switch(monthWord) {
+  case 0:
+    monthWord = 'January';
+    break;
+  case 1:
+    monthWord = 'February';
+    break;
+  case 2:
+    monthWord = 'March';
+    break;
+  case 3:
+    monthWord = 'April';
+    break;
+  case 4:
+    monthWord = 'May';
+    break;
+  case 5:
+    monthWord = 'June';
+    break;
+  case 6:
+    monthWord = 'July';
+    break;
+  case 7:
+    monthWord = 'August';
+    break;
+  case 8:
+    monthWord = 'September';
+    break;
+  case 9:
+    monthWord = 'October';
+    break;
+  case 10:
+    monthWord = 'November';
+    break;
+  case 11:
+    monthWord = 'December';
+    break;
+}
+
+$('#date').append("Today is " + dayWord + ", " + today.getDate() + "th of " + monthWord + " of " + today.getFullYear() + " and this is the time now: ");
+console.log(dayWord);
+console.log(today.getHours());
+
+if (today.getDay() === 2 || today.getDay() === 3 || today.getDay() === 4) {
+  console.log("Tue, Wed, Thu");
+  
+  if (today.getHours() > 6 && today.getHours() <= 24) {
+    console.log("Open");
+    $('#status').append("Come and join us, we are open!!!");
+  } else if (today.getHours() === 0) {
+    $('#status').append("Come and join us, we are open!!!"); 
+  } else {
+    console.log("Closed");
+    $('#status').append("Please, come back tomorrow, we are closed!!!");
+  }
+
+} else {
+  console.log("It's not Tue, Wed or Thu");
+  $('#status').append("Come and join us, today we are open 24h!!!");
+}
+
+// https://www.codesdope.com/blog/article/how-to-create-a-digital-clock-using-javascript/
+
+function currentTime() {
+  var date = new Date(); //.toLocaleString("en-US", {timeZone: "America/New_York"}); /* creating object of Date class */
+  var hour = date.getHours();
+  var min = date.getMinutes();
+  var sec = date.getSeconds();
+  hour = updateTime(hour);
+  min = updateTime(min);
+  sec = updateTime(sec);
+  document.getElementById("clock").innerText = hour + " : " + min + " : " + sec; /* adding time to the div */
+    var t = setTimeout(function(){ currentTime() }, 1000); /* setting timer */
+}
+
+function updateTime(k) {
+  if (k < 10) {
+    return "0" + k;
+  }
+  else {
+    return k;
+  }
+}
+
+currentTime(); /* calling currentTime() function to initiate the process */
+
+// The function that creates the map goes at the very end in case it gives an error. If that would happen it would stop the page loading.
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 40.8054491, lng: -73.9654415},
+    zoom: 12,
+    scrollwheel: false
+  });
+
+  var marker = new google.maps.Marker({
+    position: {lat: 40.8054491, lng: -73.9654415},
+    map: map,
+    title: 'Monks Café'
+  });
+}
+
+initMap();
