@@ -23,70 +23,98 @@ $('.reservation-day li').on('click', function() {
   return tempDay = $(this).text();
 });
 
-$('.reservation-form').on('submit', function(e) { // Once the user submit the data
+//console.log('tempDay', tempDay);
+
+$('.reservation-form').on('submit', function(e) {
   e.preventDefault();
-  reservationData.name = $('.reservation-name').val(); // here, the name is stored in reservationData
-  $('.reservation-name').val(''); // And then the value is emptied in the textbox on the page
-  reservationData.day = tempDay; // here, the day is stored in reservationData
+  reservationData.name = $('.reservation-name').val();
+  $('.reservation-name').val('');
+  console.log('tempDayIn', tempDay);
+  reservationData.day = tempDay;
 
-// Here it goes the logic to avoid the user only enter the name or the day and then submit or even submit without filling the two fields
+console.log('aqui', reservationData);
 
-  if (reservationData.name === "" || reservationData.day === undefined) {
-    if (reservationData.name == "") {
-      $('.reservation-name').addClass('noName');
-      $('#dropdownMenu1').removeClass('noDay');
-      if (reservationData.day !== undefined) {
-        $('#makingReservationMessage').html("You are booking a reservation for " + tempDay.toLowerCase() + ", but you didn't introduce any name. </br> Please, enter a name for your reservation." );
-        reservationData = {};
-      } else {
-        $('#makingReservationMessage').html("Please, enter your name and a day for your reservation." );
-        $('#dropdownMenu1').addClass('noDay');
-      }
-    } else if (reservationData.day === undefined) {
-      console.log('no day!!!');
-      $('#makingReservationMessage').html("Hi " + reservationData.name + "! Please, tell us when do you want your reservation for. </br> Please, enter a date for your reservation." );
-      $('#dropdownMenu1').addClass('noDay');
-      $('.reservation-name').val(reservationData.name);
-      $('.reservation-name').removeClass('noName');
+// Here it goes the if statement
+
+if (Object.keys(reservationData).length < 2 || reservationData.name === "" || reservationData.day === undefined) {
+  if (reservationData.name == "") {
+    console.log('no name!!!');
+    $('.reservation-name').addClass('noName');
+    $('#dropdownMenu1').removeClass('noDay');
+    if (reservationData.day !== undefined) {
+      $('#makingReservationMessage').html("You are booking a reservation for " + tempDay.toLowerCase() + ", but you didn't introduce any name. </br> Please, enter a name for your reservation." );
       reservationData = {};
+    } else {
+      $('#makingReservationMessage').html("Please, enter your name and a day for your reservation." );
+      $('#dropdownMenu1').addClass('noDay');
     }
+  } else if (reservationData.day === undefined) {
+    console.log('no day!!!');
+    $('#makingReservationMessage').html("Hi " + reservationData.name + "! Please, tell us when do you want your reservation for. </br> Please, enter a date for your reservation." );
+    $('#dropdownMenu1').addClass('noDay');
+    $('.reservation-name').val(reservationData.name);
+    $('.reservation-name').removeClass('noName');
+    reservationData = {};
+}
+  // } else {
+  //   console.log('nunca pasa¿?¿?');
+  //   $('#dropdownMenu1').removeClass('noDay');
+  //   $('.reservation-name').removeClass('noName');
+  // }
+
+  reservationData = {};
+  console.log(reservationData);
+
+  
   } else {
+    console.log('todo bien');
     $('#makingReservationMessage').html("Dear " + reservationData.name + ". Thank you very much for your reservation. </br> We are looking forward to see you " + reservationData.day.toLowerCase() + ".");
     $('#dropdownMenu1').removeClass('noDay');
     $('.reservation-name').removeClass('noName');
     var reserationsReference = database.ref('reservations');
     reserationsReference.push(reservationData);
+    console.log(reservationData, tempDay, "fin");
     reservationData = {};
     tempDay = undefined;
   }
 });
 
-// This function gets the data for the reservations from Firebase to be displayed on the page using Handlebars
+// Here it finish the if statement
 
 function getReservations(){
   database.ref('reservations').on('value',function(results) {
     var allReservations = results.val();
     $('.reservations').empty();
+    //console.log(allReservations);
+    //console.log(Object.keys(allReservations).length);
     var context = {};
     for (var i = 0; i < Object.keys(allReservations).length; i++){
+      //console.log(Object.values(Object.values(allReservations)[i]));
+      //console.log(Object.values(allReservations)[i].name);
       context['name'] = Object.values(allReservations)[i].name;
       context['day'] = Object.values(allReservations)[i].day;
       context['reservationId'] = Object.keys(allReservations)[i];
 
+      //console.log(context.name);
       var source = $("#reservation-template").html();
 
       var template = Handlebars.compile(source);
 
       var reservationListItem = template(context);
 
+      //console.log(reservationListItem);
+
       $('.reservations').append(reservationListItem);
+
+
     }
+    //console.log(context);
   });
 }
 
 getReservations();
 
-// Reservations finishes here:
+// Reservations finish here:
 
 // Comment's starts here:
 
@@ -106,19 +134,29 @@ function getComments(){
   database.ref('clientsComments').on('value',function(results) {
     var allComments = results.val();
     $('.clientsComments').empty();
+    //console.log(allComments);
+    //console.log(Object.keys(allComments).length);
     var context = {};
     for (var i = 0; i < Object.keys(allComments).length; i++){
+      //console.log(Object.values(Object.values(allComments)[i]));
+      //console.log(Object.values(allComments)[i].text);
       context['text'] = Object.values(allComments)[i].text;
       context['commentId'] = Object.keys(allComments)[i];
 
+      //console.log(context.text);
       var source = $("#comment-template").html();
 
       var template = Handlebars.compile(source);
 
       var commentListItem = template(context);
 
+      //console.log(reservationListItem);
+
       $('.clientsComments').append(commentListItem);
+
+
     }
+    //console.log(context);
   });
 }
 
@@ -144,16 +182,25 @@ $('.reservations').on('click', '.remove', function (e) {
 
 // https://www.digitalocean.com/community/tutorials/understanding-date-and-time-in-javascript
 // https://stackoverflow.com/questions/15141762/how-to-initialize-a-javascript-date-to-a-particular-time-zone
-// https://www.codesdope.com/blog/article/how-to-create-a-digital-clock-using-javascript/
 
-// const timeNeyYork = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+// const today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+//var today = new Date();
+// console.log(today);
+// console.log(today.getDay());
+// console.log(today.getHours());
+
+
+// https://www.codesdope.com/blog/article/how-to-create-a-digital-clock-using-javascript/
+//var openClosed = "open";
 
 function currentTime() {
   var today = new Date();
+  //var date = new Date(); //.toLocaleString("en-US", {timeZone: "America/New_York"}); /* creating object of Date class */
   var hour = today.getHours();
   var min = today.getMinutes();
   var sec = today.getSeconds();
   var day = today.getDay();
+  //console.log(day);
 
   var dayWord = today.getDay();
 
@@ -235,14 +282,18 @@ function currentTime() {
   }
 
   $('#date').html("Today is " + dayWord + ", the " + dayNumber + appendix() + " of " + monthWord + ", " + today.getFullYear() + " and this is the time now: ");
+  // console.log(dayWord);
+  // console.log(today.getHours());
 
-  if (day === 2 || day === 3 || day === 4) {
-    if (hour > 6 && hour <= 23 || hour === 0) {
+  if (today.getDay() === 2 || today.getDay() === 3 || today.getDay() === 4) {
+    //console.log("Tue, Wed, Thu");
+    if (today.getHours() > 6 && today.getHours() <= 23 || today.getHours() === 0) {
       $('#status').html("Come and join us! </br> We are open!!!");
     } else {
       $('#status').html("Please, come back tomorrow! </br> We are closed!!!");
     }
   } else {
+    // console.log("It's not Tue, Wed or Thu");
     $('#status').html("Come and join us! </br> Today we are open 24h!!!");
   }
 

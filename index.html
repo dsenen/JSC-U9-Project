@@ -47,6 +47,7 @@
       </div>
       <button class="btn btn-default reservation-button">Set Reservation</button>
     </form>
+    <p id="makingReservationMessage"></p>
     </div>
     <div class="column">
 
@@ -55,8 +56,11 @@
       <h2>Existing Reservations</h2>
       <table>
         <thead>
-          <th>Who?</th>
-          <th>When?</th>
+          <tr>
+            <th>Who?</th>
+            <th>When?</th>
+            <th></th>
+          </tr>
         </thead>
           <script id="reservation-template" type="text/x-handlebars-template">
             <tr data-id="{{reservationId}}">
@@ -110,8 +114,8 @@
       </script>
     </div>
   </div>
-
-  <h1>Opening Hours</h1>
+  
+  <h1>Opening hours</h1>
 
   <div class="row">
     <div class="column">
