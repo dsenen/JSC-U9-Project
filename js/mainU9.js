@@ -240,7 +240,7 @@ function currentTime() {
     if (hour > 6 && hour <= 23 || hour === 0) {
       $('#status').html("Come and join us! </br> We are open!!!");
     } else {
-      $('#status').html("Please, come back tomorrow! </br> We are closed!!!");
+      $('#status').html("We are closed at the moment. Please, check the opening times table that you can see on the lext side of the screen and come back soon!!!");
     }
   } else {
     $('#status').html("Come and join us! </br> Today we are open 24h!!!");
